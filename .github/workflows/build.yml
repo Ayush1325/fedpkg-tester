@@ -14,11 +14,11 @@ jobs:
           dnf install -y fedpkg SDL2-devel arm-trusted-firmware-armv8 bison crust-firmware dtc flex gcc gnutls-devel libuuid-devel make ncurses-devel openssl-devel openssl-devel-engine python3-devel python3-libfdt python3-pyelftools swig xxd
 
       - name: Clone Pkg repo
-        run: git clone https://src.fedoraproject.org/forks/ayush1325/rpms/uboot-tools.git
+        run: git clone https://src.fedoraproject.org/forks/ayush1325/rpms/uboot-tools.git -b beagleplay
 
       - name: Build
         working-directory: uboot-tools
-        run: fedpkg local
+        run: fedpkg --release rawhide local
         
       - name: Upload artifacts
         uses: actions/upload-artifact@v5
