@@ -1,0 +1,28 @@
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04-arm
+    container:
+      image: fedora:latest
+    steps:
+      - name: Install deps
+        run: |
+          dnf install -y fedpkg SDL2-devel arm-trusted-firmware-armv8 bison crust-firmware dtc flex gcc gnutls-devel libuuid-devel make ncurses-devel openssl-devel openssl-devel-engine python3-devel python3-libfdt python3-pyelftools swig xxd
+
+      - name: Clone Pkg repo
+        run: git clone https://src.fedoraproject.org/forks/ayush1325/rpms/uboot-tools.git
+
+      - name: Build
+        working-directory: uboot-tools
+        run: fedpkg local
+        
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v5
+        with:
+          name: artifacts-windows
+          path: |
+            results/*
