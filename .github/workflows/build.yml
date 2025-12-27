@@ -11,14 +11,14 @@ jobs:
     steps:
       - name: Install deps
         run: |
-          dnf install -y fedpkg SDL2-devel arm-trusted-firmware-armv8 bison crust-firmware dtc flex gcc gnutls-devel libuuid-devel make ncurses-devel openssl-devel openssl-devel-engine python3-devel python3-libfdt python3-pyelftools swig xxd
+          dnf install -y git fedpkg asciidoc audit-libs-devel bindgen binutils-devel bison clang bpftool clippy dracut dwarves elfutils-devel flex fuse-devel gcc-c++ gettext glibc-static hmaccalc hostname java-devel kernel-rpm-macros libbabeltrace-devel libbpf-devel libcap-devel libcap-ng-devel libmnl-devel libtraceevent-devel libtracefs-devel libxml2-devel llvm-devel lvm2 m4 ncurses-devel net-tools newt-devel numactl-devel opencsd-devel openssl openssl-devel pciutils-devel perl perl-devel perl-generators python3-devel python3-docutils python3-jsonschema python3-pip rsync rust rust-src rustfmt swig systemd-boot-unsigned systemd-ukify tpm2-tools which xmlto xz-devel zlib-devel
 
       - name: Clone Pkg repo
-        run: git clone https://src.fedoraproject.org/forks/ayush1325/rpms/uboot-tools.git -b beagleplay
+        run: git clone https://src.fedoraproject.org/rpms/kernel.git -b f43
 
       - name: Build
-        working-directory: uboot-tools
-        run: fedpkg --release rawhide local
+        working-directory: kernel
+        run: fedpkg --release f43 local
         
       - name: Upload artifacts
         uses: actions/upload-artifact@v5
